@@ -9,7 +9,7 @@ export default function Header({ onOpenQuoteModal }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 40) {
+      if (window.scrollY > 30) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -17,7 +17,7 @@ export default function Header({ onOpenQuoteModal }) {
 
       // Update active section
       const sections = ['hero', 'about', 'solutions', 'custom-manufacturing', 'products', 'inside-process', 'quality', 'infrastructure', 'contact'];
-      const scrollPos = window.scrollY + 120;
+      const scrollPos = window.scrollY + 140;
 
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -35,6 +35,18 @@ export default function Header({ onOpenQuoteModal }) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Prevent background scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
 
   const navItems = [
     { label: 'About', id: 'about' },
@@ -59,12 +71,13 @@ export default function Header({ onOpenQuoteModal }) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-brand-navy-900/95 backdrop-blur-md shadow-lg border-b border-brand-navy-800/80 py-3'
-          : 'bg-gradient-to-b from-brand-navy-950/90 via-brand-navy-900/60 to-transparent py-5'
+          ? 'bg-brand-navy-900/95 backdrop-blur-md shadow-lg border-b border-brand-navy-800/80 py-2.5 sm:py-3'
+          : 'bg-gradient-to-b from-brand-navy-950/95 via-brand-navy-900/70 to-transparent py-3.5 sm:py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
+          
           {/* Brand Logo */}
           <a
             href="#hero"
@@ -72,26 +85,26 @@ export default function Header({ onOpenQuoteModal }) {
               e.preventDefault();
               handleNavClick('hero');
             }}
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-green-500/50 rounded-lg p-1"
+            className="flex items-center gap-2 sm:gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-green-500/50 rounded-lg p-0.5"
           >
             {/* Scientific Minimal Logo Icon */}
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-blue-700 to-brand-navy-800 border border-brand-green-500/40 flex items-center justify-center shadow-inner group-hover:border-brand-green-500 transition-all">
-              <svg className="w-6 h-6 text-brand-green-500 group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-brand-blue-700 to-brand-navy-800 border border-brand-green-500/40 flex items-center justify-center shadow-inner group-hover:border-brand-green-500 transition-all shrink-0">
+              <svg className="w-4 h-4 sm:w-6 sm:h-6 text-brand-green-500 group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 2L4 14H11L10 22L20 10H13L14 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             
             <div className="flex flex-col">
-              <span className="text-lg sm:text-xl font-extrabold tracking-tight text-white leading-none">
+              <span className="text-base sm:text-xl font-extrabold tracking-tight text-white leading-none">
                 ENERGY
               </span>
-              <span className="text-[10px] sm:text-xs font-semibold tracking-widest text-brand-green-400 uppercase leading-tight mt-0.5">
+              <span className="text-[9px] sm:text-xs font-semibold tracking-widest text-brand-green-400 uppercase leading-tight mt-0.5">
                 FORMULATIONS
               </span>
             </div>
           </a>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation (Visible on lg+) */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2" aria-label="Main Navigation">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
@@ -132,7 +145,7 @@ export default function Header({ onOpenQuoteModal }) {
             })}
           </nav>
 
-          {/* Right Header Action Button */}
+          {/* Right Header Action Button (Desktop) */}
           <div className="hidden lg:flex items-center space-x-4">
             <button
               onClick={() => onOpenQuoteModal ? onOpenQuoteModal() : handleNavClick('contact')}
@@ -143,39 +156,39 @@ export default function Header({ onOpenQuoteModal }) {
             </button>
           </div>
 
-          {/* Mobile Hamburger Toggle */}
+          {/* Mobile Hamburger Toggle & Fast Quote (Mobile & Tablet) */}
           <div className="flex lg:hidden items-center space-x-2">
             <button
               onClick={() => onOpenQuoteModal ? onOpenQuoteModal() : handleNavClick('contact')}
-              className="px-3 py-1.5 rounded-md text-xs font-bold text-brand-navy-950 bg-brand-green-500"
+              className="px-2.5 py-1.5 rounded-md text-[11px] font-bold text-brand-navy-950 bg-brand-green-500 active:bg-brand-green-400 shadow-sm"
             >
               Quote
             </button>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-300 hover:text-white bg-brand-navy-800/80 border border-brand-navy-700 focus:outline-none focus:ring-2 focus:ring-brand-green-500"
+              className="p-2 rounded-lg text-slate-300 hover:text-white bg-brand-navy-850 border border-brand-navy-700 focus:outline-none focus:ring-2 focus:ring-brand-green-500"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
+              {mobileMenuOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer Menu with Backdrop Overlay */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-full bg-brand-navy-950/98 border-b border-brand-navy-800 shadow-2xl backdrop-blur-2xl transition-all duration-300 animate-fade-in">
-          <div className="px-5 py-6 space-y-3">
+        <div className="lg:hidden fixed inset-x-0 top-full bg-brand-navy-950/98 border-b border-brand-navy-800 shadow-2xl backdrop-blur-2xl transition-all duration-300 animate-fade-in max-h-[calc(100vh-65px)] overflow-y-auto">
+          <div className="px-4 py-5 space-y-2">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`w-full text-left py-3 px-4 rounded-xl text-sm font-semibold tracking-wide flex items-center justify-between transition-colors ${
+                className={`w-full text-left py-3 px-3.5 rounded-xl text-sm font-semibold tracking-wide flex items-center justify-between transition-colors ${
                   item.isSpecial
-                    ? 'bg-brand-green-500/20 text-brand-green-400 border border-brand-green-500/40'
+                    ? 'bg-brand-green-500/20 text-brand-green-400 border border-brand-green-500/40 font-bold'
                     : activeSection === item.id
-                    ? 'bg-brand-navy-800 text-white'
+                    ? 'bg-brand-navy-800 text-white font-bold'
                     : 'text-slate-300 hover:bg-brand-navy-850 hover:text-white'
                 }`}
               >
@@ -184,14 +197,14 @@ export default function Header({ onOpenQuoteModal }) {
               </button>
             ))}
 
-            <div className="pt-4 border-t border-brand-navy-800">
+            <div className="pt-3 mt-2 border-t border-brand-navy-800 pb-2">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   if (onOpenQuoteModal) onOpenQuoteModal();
                   else handleNavClick('contact');
                 }}
-                className="w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold uppercase tracking-wider text-brand-navy-950 bg-brand-green-500 shadow-glow-green"
+                className="w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold uppercase tracking-wider text-brand-navy-950 bg-brand-green-500 shadow-glow-green active:bg-brand-green-400"
               >
                 Request a Quote →
               </button>
