@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: light;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    background-color: #F5F8FA;
+    color: #12212F;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+}
+
+/* Custom editorial pharmaceutical utilities */
+@layer components {
+  .editorial-tag {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full border;
+  }
+
+  .editorial-tag-navy {
+    @apply editorial-tag bg-brand-navy-900/5 text-brand-navy-900 border-brand-navy-900/10;
+  }
+
+  .editorial-tag-green {
+    @apply editorial-tag bg-brand-green-500/10 text-brand-green-600 border-brand-green-500/20;
+  }
+
+  .editorial-tag-dark {
+    @apply editorial-tag bg-white/10 text-brand-green-400 border-white/10 backdrop-blur-md;
+  }
+
+  .glass-dark {
+    background: rgba(7, 26, 43, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-light {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+  }
+
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #071A2B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1E3A56;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #17A673;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
