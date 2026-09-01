@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, MessageCircle, FileText, ArrowRight, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Phone, MessageCircle, FileText, ArrowRight } from 'lucide-react';
 import { BRAND_CONFIG } from '../../data/companyData';
-import { scrollToSection } from '../../utils/helpers';
 
 export default function FloatingActions({ onOpenQuoteModal }) {
   const [showDesktopFloat, setShowDesktopFloat] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +21,7 @@ export default function FloatingActions({ onOpenQuoteModal }) {
 
   const handleQuoteClick = () => {
     if (onOpenQuoteModal) onOpenQuoteModal();
-    else scrollToSection('contact');
+    else navigate('/contact');
   };
 
   return (

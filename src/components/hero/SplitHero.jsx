@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles, Sliders } from 'lucide-react';
-import { scrollToSection } from '../../utils/helpers';
 
 export default function SplitHero({ onOpenQuoteModal }) {
+  const navigate = useNavigate();
+
   return (
     <section id="hero" className="relative min-h-screen bg-brand-navy-950 text-white flex items-center pt-20 sm:pt-24 lg:pt-28 pb-14 sm:pb-16 overflow-hidden">
       {/* Subtle Background Mesh Grid */}
@@ -40,19 +42,19 @@ export default function SplitHero({ onOpenQuoteModal }) {
             {/* Call to Actions */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-8 sm:mb-10">
               <button
-                onClick={() => onOpenQuoteModal ? onOpenQuoteModal() : scrollToSection('contact')}
+                onClick={() => onOpenQuoteModal ? onOpenQuoteModal() : navigate('/contact')}
                 className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-navy-950 bg-brand-green-500 hover:bg-brand-green-400 shadow-glow-green hover:shadow-lg transition-all duration-300 group"
               >
                 <span>Start a Conversation</span>
                 <ArrowRight className="w-4 h-4 text-brand-navy-950 group-hover:translate-x-1.5 transition-transform" />
               </button>
 
-              <button
-                onClick={() => scrollToSection('solutions')}
+              <Link
+                to="/solutions"
                 className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-semibold tracking-wide text-slate-200 bg-brand-navy-900/80 hover:bg-brand-navy-800 border border-slate-700 hover:border-slate-500 transition-all duration-200"
               >
                 <span>Explore Capabilities</span>
-              </button>
+              </Link>
             </div>
 
             {/* Micro Highlights */}
